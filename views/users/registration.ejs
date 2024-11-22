@@ -1,0 +1,83 @@
+<% include('../layouts/header.ejs') %>
+
+  <h1>User Registration Form</h1>
+
+  <form action="/register" method="post" onsubmit="return validateForm()">
+    <input type="text" name="name" id='name' placeholder="Enter Name" >
+    <br><br>
+    <input type="email" name="email" id='email' placeholder="Enter Email">
+    <br><br>
+    <input type="text" name="mno" id="mno" placeholder="Enter Mobile">
+    <br><br>
+    <input type="password" name="password" id='password' placeholder="Enter Password">
+    <br><br>
+    <input type="submit" value="Register">
+
+  </form>
+
+  <% if (typeof message !== 'undefined') { %>
+    <p style="color:red;"><%= message %></p>
+<% } %>
+
+  <!-- <p style="color:green;"></p> -->
+  <!-- <% 
+
+if(typeof message !=='undefined'){
+  %>
+  <p style="color: green;"><%= message %></p>
+  <%
+}
+
+%> -->
+  <script>
+    function validateForm() {
+      let name = document.getElementById("name").value.trim();
+      let email = document.getElementById("email").value;
+      let mno = document.getElementById("mno").value;
+      let password = document.getElementById("password").value;
+      let errorMessage = document.getElementById("error-message");
+
+      const nameRegex = /^[a-zA-Z\s]+$/;
+      if (!name) {
+        errorMessage.textContent = "Name cannot be empty";
+        return false;
+      }
+      if (!nameRegex.test(name)) {
+        errorMessage.textContent = "Name must not contain special characters.";
+        return false;
+      }
+
+      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+      if (!email || !emailRegex.test(email)) {
+        errorMessage.textContent = "Please enter a valid email.";
+        return false;
+      }
+
+      const mobileRegex = /^[0-9]{10}$/;
+      const repeatedNumberRegex = /^(\d)\1{9}$/;
+
+      if (!mno || !mobileRegex.test(mno)) {
+        errorMessage.textContent = "Mobile number must be 10 digits.";
+        return false;
+      }
+      if (repeatedNumberRegex.test(mno)) {
+        errorMessage.textContent = "Please enter valid phone number";
+        return false;
+      }
+
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+      if (!password) {
+        errorMessage.textContent = "Password cannot be empty.";
+        return false;
+      }
+      if (!passwordRegex.test(password)) {
+        errorMessage.textContent = "Password must be at least 6 characters long, include uppercase, lowercase, a number, and a special character.";
+        return false;
+      }
+
+      errorMessage.textContent = "";
+      return true;
+    }
+  </script>
+
+  <% include('../layouts/footer.ejs') %>

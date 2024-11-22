@@ -1,0 +1,211 @@
+<style>
+    /* General page styling */
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(120deg, #f8f9fc, #e4eaf3);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    /* Center the content container */
+    .admin-home-container {
+        background: #ffffff;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        width: 90%;
+        text-align: center;
+        position: relative;
+    }
+
+    /* Header styling */
+    h1 {
+        font-size: 26px;
+        color: #2c3e50;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Navigation links styling */
+    a {
+        text-decoration: none;
+        color: #ffffff;
+        background: #7f83f0;
+        padding: 0.6rem 1rem;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: bold;
+        transition: background 0.3s;
+        margin: 0.5rem;
+        display: inline-block;
+    }
+
+    /* Hover effect for links */
+    a:hover {
+        background: #5d63c9;
+    }
+
+    /* Table styling */
+    table {
+        width: 100%;
+        margin-top: 1.5rem;
+        border-collapse: collapse;
+        text-align: left;
+        color: #2c3e50;
+        font-size: 16px;
+    }
+
+    /* Table rows and columns */
+    table td {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid #e4eaf3;
+    }
+
+    /* Table first column styling */
+    table td:first-child {
+        font-weight: bold;
+        color: #5d63c9;
+    }
+
+    /* Logout button styling */
+    .logout-btn {
+        margin-top: 1.5rem;
+        background: #e74c3c;
+        color: #ffffff;
+        border: none;
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    /* Hover effect for logout button */
+    .logout-btn:hover {
+        background: #c0392b;
+    }
+
+    /* Decorative background shapes */
+    body::before, 
+    body::after {
+        content: '';
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        background: rgba(255, 255, 255, 0.4);
+        filter: blur(50px);
+        border-radius: 50%;
+        z-index: 0;
+    }
+
+    body::before {
+        top: 10%;
+        left: 15%;
+    }
+
+    body::after {
+        bottom: 10%;
+        right: 15%;
+    }
+
+    /* Responsive Design */
+    @media screen and (max-width: 768px) {
+        .admin-home-container {
+            padding: 1.5rem;
+        }
+
+        h1 {
+            font-size: 22px;
+        }
+
+        table td {
+            font-size: 14px;
+            padding: 0.5rem;
+        }
+    }
+</style>
+
+
+
+<div class="admin-home-container">
+    <% include("../layouts/header.ejs") %>
+    <h1>Welcome, <%= admin.name %></h1>
+    <a href="/admin/dashboard">Dashboard</a>
+    <table>
+        <tr>
+            <td>Email</td>
+            <td><%= admin.email %></td>
+        </tr>
+        <tr>
+            <td>Mobile</td>
+            <td><%= admin.mobile %></td>
+        </tr>
+    </table>
+    <!-- <a href="/edit?id=<%=admin._id %>">Edit</a> -->
+    <button class="logout-btn" onclick="window.location.href='/admin/logout';">Logout</button>
+    <% include("../layouts/footer.ejs") %>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <%include("../layouts/header.ejs")%>
+
+<h1>Welcome,<%=admin.name%></h1>
+<a href="/admin/dashboard">Dashboard</a>
+<table style="width:50%;">
+
+    <tr>
+        <td>Email</td>
+        <td><%= admin.email %></td>
+    </tr>
+    <br>
+    <tr>
+        <td>Mobile</td>
+        <td><%= admin.mobile %></td>
+    </tr>
+
+</table>
+<a href="/edit?id=<%=admin._id %>">Edit</a>
+<a href="/admin/logout">Logout</a>
+
+<%include("../layouts/footer.ejs")%> -->

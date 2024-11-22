@@ -1,0 +1,271 @@
+<style>
+    /* General page styling */
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #eef2f3, #dfe9f3);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+    }
+
+    /* Dashboard container */
+    .dashboard-container {
+        width: 80%;
+        max-width: 1200px;
+        background: #ffffff;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    /* Header styling */
+    h1 {
+        font-size: 32px;
+        color: #2c3e50;
+        margin-bottom: 1.5rem;
+        font-weight: bold;
+    }
+
+    /* Links and buttons */
+    a {
+        text-decoration: none;
+        color: #ffffff;
+        background: #5d63c9;
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: bold;
+        margin: 0.5rem;
+        display: inline-block;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    a:hover {
+        background: #4a51a8;
+        transform: translateY(-2px);
+    }
+
+    /* Table styling */
+    table {
+        width: 100%;
+        margin-top: 2rem;
+        border-collapse: collapse;
+        font-size: 16px;
+    }
+
+    th, td {
+        padding: 1rem;
+        text-align: center;
+        border-bottom: 1px solid #e6eaf0;
+        color: #2c3e50;
+    }
+
+    th {
+        background: #f5f7fb;
+        font-weight: bold;
+        color: #34495e;
+    }
+
+    tr:nth-child(even) {
+        background: #f9fbfd;
+    }
+
+    tr:hover {
+        background: #f1f4f8;
+    }
+
+    /* Empty state row */
+    td[colspan="5"] {
+        text-align: center;
+        font-style: italic;
+        color: #7f8c8d;
+    }
+
+    /* Verified status styling */
+    td p {
+        margin: 0;
+        padding: 0.4rem 0.8rem;
+        display: inline-block;
+        font-size: 14px;
+        border-radius: 5px;
+        color: #ffffff;
+    }
+
+    td p:not(:last-child) {
+        margin-right: 0.5rem;
+    }
+
+    td p:nth-child(1) {
+        background-color: #e74c3c; /* Red for not verified */
+    }
+
+    td p:nth-child(2) {
+        background-color: #2ecc71; /* Green for verified */
+    }
+
+    /* Responsive adjustments */
+    @media screen and (max-width: 768px) {
+        .dashboard-container {
+            padding: 1.5rem;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        table {
+            font-size: 14px;
+        }
+
+        th, td {
+            padding: 0.5rem;
+        }
+    }
+</style>
+
+
+<div class="dashboard-container">
+    <%include("../layouts/header.ejs")%>
+
+    <h1>Dashboard</h1>
+
+    <a href="/admin/new-user">Add New User</a>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <!-- <th>Verified</th> -->
+            <th>Actions</th>
+        </tr>
+        <% if (users.length > 0) { %>
+            <% for (let i = 0; i < users.length; i++) { %>
+                <tr>
+                    <td><%= users[i].name %></td>
+                    <td><%= users[i].email %></td>
+                    <td><%= users[i].mobile %></td>
+                    <!-- <td>
+                        <% if (users[i].is_verified == 0) { %>
+                            <p>Not Verified</p>
+                        <% } else { %>
+                            <p>Verified</p>
+                        <% } %>
+                    </td> -->
+                    <td>
+                        <a href="/admin/edit-user?id=<%= users[i]._id %>">Edit</a>
+                        <a href="/admin/delete-user?id=<%= users[i]._id %>">Delete</a>
+                    </td>
+                </tr>
+            <% } %>
+        <% } else { %>
+            <tr>
+                <td colspan="5">Users Not Found</td>
+            </tr>
+        <% } %>
+    </table>
+
+    <a href="/admin/home">Go to Home</a>
+
+    <%include("../layouts/footer.ejs")%>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <%include("../layouts/header.ejs")%>
+
+<h1>Dashboard</h1>
+
+<a href="/admin/new-user">Add New User</a>
+<br><br><br>
+
+<table width="60%">
+    <tr>
+                
+        <th>Name</th>
+        <th>Email</th>
+        <th>Mobile</th>
+        <th>Verified</th>
+        <th>Actions</th>
+        
+    </tr>
+    <%
+      if(users.length>0){
+        for(let i=0;i<users.length;i++){
+            %>
+               <tr>
+                <td><%= users[i].name %></td>
+                <td><%= users[i].email %></td>
+                <td><%= users[i].mobile %></td>
+                <td><%
+                    if(users[i].is_verified == 0){
+                        %>
+                        <p>Not Verified</p>
+                        <%
+                    }else{
+                        %>
+                        <p>Verified</p>
+                        <%
+                    }
+                     %></td>
+                     <td>
+                        <a href="/admin/edit-user?id=<%= users[i]._id %>">Edit</a>
+                        <a href="/admin/delete-user?id=<%= users[i]._id %>">Delete</a>
+                    </td>
+               </tr>
+            <%
+       
+        }
+
+      }else{
+        %>
+        <tr>
+            <td colspan="5">Users Not Found</td>
+        </tr>
+        <%
+      }
+    
+    %>
+</table>
+<br>
+<a href="/admin/home">Go to Home</a>
+
+<%include("../layouts/footer.ejs")%> -->

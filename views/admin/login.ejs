@@ -1,0 +1,171 @@
+<style>
+    /* General page styling */
+    body {
+        font-family: 'Roboto', sans-serif;
+        background: linear-gradient(135deg, #d4e7f5, #e6d9f0);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    /* Adding a decorative background design */
+    body::before {
+        content: '';
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        background: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(5px);
+        border-radius: 50%;
+        top: 10%;
+        left: 10%;
+        z-index: 0;
+    }
+
+    body::after {
+        content: '';
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(5px);
+        border-radius: 50%;
+        bottom: 10%;
+        right: 15%;
+        z-index: 0;
+    }
+
+    /* Centering the login container */
+    .admin-login-container {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        width: 100%;
+        text-align: center;
+        z-index: 1;
+        position: relative;
+    }
+
+    /* Styling the heading */
+    h1 {
+        margin-bottom: 1rem;
+        font-size: 28px;
+        font-weight: bold;
+        color: #5d5d8b;
+    }
+
+    /* Styling error/success messages */
+    h3 {
+        color: #e74c3c;
+        margin-bottom: 1rem;
+        font-size: 16px;
+    }
+
+    /* Styling the form inputs */
+    input[type="email"],
+    input[type="password"] {
+        width: calc(100% - 20px);
+        margin: 0.75rem 0;
+        padding: 0.75rem;
+        border: 1px solid #cdd3df;
+        border-radius: 8px;
+        outline: none;
+        font-size: 16px;
+        background: #f7f9fc;
+    }
+
+    /* Focus effects */
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+        border: 1px solid #7f83f0;
+        box-shadow: 0 0 8px rgba(127, 131, 240, 0.5);
+    }
+
+    /* Styling the submit button */
+    input[type="submit"] {
+        width: 100%;
+        padding: 0.75rem;
+        margin-top: 1rem;
+        background: linear-gradient(135deg, #7f83f0, #6b73d4);
+        border: none;
+        border-radius: 8px;
+        color: #fff;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    /* Hover effect on submit button */
+    input[type="submit"]:hover {
+        background: linear-gradient(135deg, #6b73d4, #5c63b0);
+    }
+
+    /* Styling placeholder text */
+    form input::placeholder {
+        font-style: italic;
+        color: #a0a6b8;
+    }
+
+    /* Responsive adjustments */
+    @media screen and (max-width: 480px) {
+        .admin-login-container {
+            padding: 1.5rem;
+        }
+
+        h1 {
+            font-size: 22px;
+        }
+
+        h3 {
+            font-size: 14px;
+        }
+    }
+</style>
+
+<div class="admin-login-container">
+    <% include('../layouts/header.ejs') %>
+    <h1>Admin Login</h1>
+    <!-- <% if (typeof message !== 'undefined') { %>
+        <h3><%= message %></h3>
+    <% } %> -->
+    <form action="" method="POST" onclick="return validateForm()">
+        <input type="email" name="email" id="email" placeholder="Enter Email">
+        <input type="password" name="password" id="password" placeholder="Enter Password">
+        <input type="submit" value="Login">
+    </form>
+
+    <p id="error-message" style="color:red;"></p>
+
+    <% if (typeof message !== 'undefined') { %>
+        <p style="color:red;"><%= message %></p>
+    <% } %>
+
+    <script>
+        function validateForm() {
+          let email = document.getElementById("email").value;
+          let password = document.getElementById("password").value.trim();
+          let errorMessage = document.getElementById("error-message");
+    
+          if (!email) {
+            errorMessage.textContent = "Please enter email.";
+            return false;
+          }
+
+          if (!password) {
+            errorMessage.textContent = "Please enter password";
+            return false;
+          }
+    
+          errorMessage.textContent = "";
+          return true;
+        }
+      </script>
+    <% include('../layouts/footer.ejs') %>
+</div>
+

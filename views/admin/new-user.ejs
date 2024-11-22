@@ -1,0 +1,211 @@
+<style>
+    /* General page styling */
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #f9f9fc, #dbe6f6);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    /* Form container */
+    .form-container {
+        background: #ffffff;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        max-width: 500px;
+        text-align: center;
+    }
+
+    /* Header styling */
+    h1 {
+        font-size: 28px;
+        color: #34495e;
+        margin-bottom: 1.5rem;
+        font-weight: bold;
+    }
+
+    /* Form input fields */
+    form input[type="text"],
+    form input[type="email"],
+    form input[type="password"] {
+        width: 90%;
+        padding: 0.75rem;
+        margin-bottom: 1rem;
+        border: 1px solid #dfe4ea;
+        border-radius: 8px;
+        font-size: 16px;
+        color: #2c3e50;
+        outline: none;
+        transition: border 0.3s, box-shadow 0.3s;
+    }
+
+    form input[type="text"]:focus,
+    form input[type="email"]:focus,
+    form input[type="password"]:focus {
+        border: 1px solid #5d63c9;
+        box-shadow: 0 0 8px rgba(93, 99, 201, 0.3);
+    }
+
+    /* Submit button */
+    form input[type="submit"] {
+        background: #5d63c9;
+        color: #ffffff;
+        padding: 0.75rem 2rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    form input[type="submit"]:hover {
+        background: #4a51a8;
+        transform: translateY(-2px);
+    }
+
+    /* Messages */
+    p {
+        margin-top: 1rem;
+        font-size: 14px;
+    }
+
+    p[style="color:green;"] {
+        color: #2ecc71;
+        font-weight: bold;
+    }
+
+    p[style="color:red;"] {
+        color: #e74c3c;
+        font-weight: bold;
+    }
+
+    /* Go Back link */
+    a {
+        text-decoration: none;
+        color: #5d63c9;
+        margin-top: 1.5rem;
+        display: inline-block;
+        font-size: 14px;
+        font-weight: bold;
+        transition: color 0.3s;
+    }
+
+    a:hover {
+        color: #4a51a8;
+    }
+
+    /* Responsive Design */
+    @media screen and (max-width: 768px) {
+        .form-container {
+            padding: 1.5rem;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        form input[type="text"],
+        form input[type="email"],
+        form input[type="password"],
+        form input[type="submit"] {
+            font-size: 14px;
+        }
+    }
+</style>
+
+
+<div class="form-container">
+    <% include('../layouts/header.ejs') %>
+
+        <h1>Add New User</h1>
+
+        <form action="" method="post" id="addUserForm">
+            <input type="text" name="name" id="name" placeholder="Enter Name">
+            <input type="email" name="email" id="email" placeholder="Enter Email">
+            <input type="text" name="mno" id="mno" placeholder="Enter Mobile">
+            <input type="password" name="password" id="password" placeholder="Enter the passsowrd" />
+            <input type="submit" value="Add User">
+        </form>
+
+        <p id="error-message" style="color:red;"></p>
+
+        <% if (typeof message !=='undefined' ) { %>
+            <p style="color: red;">
+                <%= message %>
+            </p>
+            <% } %>
+
+                <a href="/admin/Dashboard">Go Back</a>
+
+                <script>
+                    document.getElementById("addUserForm").addEventListener("submit", function (event) {
+                        if (!validateForm()) {
+                            event.preventDefault();
+                        }
+                    });
+                    function validateForm() {
+                        let name = document.getElementById("name").value.trim();
+                        let email = document.getElementById("email").value.trim();
+                        let mno = document.getElementById("mno").value.trim();
+                        let password = document.getElementById("password").value.trim();
+                        let errorMessage = document.getElementById("error-message");
+
+                        const nameRegex = /^[a-zA-Z\s]+$/;
+                        if (!name) {
+                            errorMessage.textContent = "Name cannot be empty.";
+                            return false;
+                        }
+                        if (!nameRegex.test(name)) {
+                            errorMessage.textContent = "Name must not contain special characters.";
+                            return false;
+                        }
+
+                        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+                        if (!email) {
+                            errorMessage.textContent = "Email cannot be empty.";
+                            return false;
+                        }
+                        if (!emailRegex.test(email)) {
+                            errorMessage.textContent = "Please enter a valid email.";
+                            return false;
+                        }
+
+                        const mobileRegex = /^[0-9]{10}$/;
+                        const repeatedNumberRegex = /^(\d)\1{9}$/;
+                        if (!mno) {
+                            errorMessage.textContent = "Mobile number cannot be empty.";
+                            return false;
+                        }
+                        if (!mobileRegex.test(mno)) {
+                            errorMessage.textContent = "Mobile number must be 10 digits.";
+                            return false;
+                        }
+                        if (repeatedNumberRegex.test(mno)) {
+                            errorMessage.textContent = "Please enter a valid mobile number.";
+                            return false;
+                        }
+
+                        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+                        if (!password) {
+                            errorMessage.textContent = "Password cannot be empty.";
+                            return false;
+                        }
+                        if (!passwordRegex.test(password)) {
+                            errorMessage.textContent = "Password must be at least 6 characters long, include uppercase, lowercase, a number, and a special character.";
+                            return false;
+                        }
+
+                        errorMessage.textContent = "";
+                        return true;
+                    }
+                </script>
+
+                <% include('../layouts/footer.ejs') %>
+</div>
