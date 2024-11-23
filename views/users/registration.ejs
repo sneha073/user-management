@@ -1,3 +1,99 @@
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right,#f2a5d7, #f5edb7);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #5a5857;
+    text-align: center;
+    padding: 20px 0;
+    text-transform: uppercase;
+  }
+
+  form {
+    background: #ffffff;
+    padding: 30px 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="submit"] {
+    width: calc(100% - 20px);
+    padding: 12px;
+    margin: 10px 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: #f9f9f9;
+    box-sizing: border-box;
+    transition: all 0.3s ease-in-out;
+  }
+
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="password"]:focus {
+    border-color: #7baaf7;
+    outline: none;
+    background: #fff;
+    box-shadow: 0px 0px 8px rgba(123, 170, 247, 0.5);
+  }
+
+  input[type="submit"] {
+    background-color: #fd86cf;
+    color: white;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    font-size: 1.1rem;
+  }
+
+  input[type="submit"]:hover {
+    background-color: #ff6dc4;
+    box-shadow: 0px 4px 8px rgba(85, 147, 240, 0.4);
+  }
+
+  p {
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: -10px;
+    color: #e63946;
+  }
+
+  @media (max-width: 600px) {
+    form {
+      width: 90%;
+    }
+    h1 {
+      font-size: 1.8rem;
+    }
+  }
+
+  #error-message {
+    text-align: center;
+    color: #e63946;
+    font-size: 0.9rem;
+    margin: 10px 0;
+  }
+</style>
 <% include('../layouts/header.ejs') %>
 
   <h1>User Registration Form</h1>
@@ -20,7 +116,7 @@
 <% } %>
 
   <!-- <p style="color:green;"></p> -->
-  <!-- <% 
+  <!--<% 
 
 if(typeof message !=='undefined'){
   %>
@@ -80,4 +176,4 @@ if(typeof message !=='undefined'){
     }
   </script>
 
-  <% include('../layouts/footer.ejs') %>
+  <% include('../layouts/footer.ejs') %> 

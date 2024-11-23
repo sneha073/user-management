@@ -3,9 +3,11 @@ const user_route = express();
 const userController = require("../controllers/userController");
 const session = require("express-session");
 const config = require("../config/config");
+const dotenv = require("dotenv")
+dotenv.config();
 
 user_route.use(session({
-    secret: config.sessionSecret,
+    secret: process.env.SESSIONSECRET,
      resave: false,
     saveUninitialized: false,
 }));

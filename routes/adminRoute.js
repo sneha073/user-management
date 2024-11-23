@@ -1,12 +1,14 @@
 const express = require("express");
 const admin_route = express();
+const dotenv = require("dotenv")
+dotenv.config();
 
 const session = require("express-session");
 const config = require("../config/config");
 // admin_route.use(session({secret:config.sessionSecret}));
 
 admin_route.use(session({
-    secret: config.sessionSecret,
+    secret: process.env.SESSIONSECRET,
      resave: false,
     saveUninitialized: false,
 }));
@@ -25,13 +27,15 @@ const adminController = require("../controllers/adminController");
 admin_route.get('/',auth.isLogout,adminController.loadLogin);
 
 
-admin_route.post('/',adminController.verifyLogin);
+admin_route.post('/verify',adminController.verifyLogin);
 
 admin_route.get('/home',auth.isLogin,adminController.loadDashboard);
 
 admin_route.get('/logout',auth.isLogin,adminController.logout);
 
 admin_route.get('/dashboard',auth.isLogin,adminController.adminDashboard);
+
+admin_route.get('/dashboard/search',adminController.searchUser)
 
 admin_route.get('/new-user',auth.isLogin,adminController.newUserLoad);
 

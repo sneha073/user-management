@@ -2,7 +2,7 @@
     /* General page styling */
     body {
         font-family: 'Poppins', sans-serif;
-        background: linear-gradient(135deg, #eef2f3, #dfe9f3);
+        background: linear-gradient(135deg, #d4e7f5, #e6d9f0);
         margin: 0;
         padding: 0;
         display: flex;
@@ -107,6 +107,30 @@
     td p:nth-child(2) {
         background-color: #2ecc71; /* Green for verified */
     }
+    button[type="submit"] {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    padding: 10px 20px; /* Add padding for better spacing */
+    font-size: 16px; /* Increase font size for readability */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Add rounded corners */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    transition: background-color 0.3s ease; /* Smooth transition effect */
+    }
+
+    button[type="submit"]:hover {
+    background-color: #45a049; /* Darker green on hover */
+    }
+    .search{
+        height:28px; 
+        border-color: #4CAF50; 
+        border-style: solid; 
+        border-radius: 4px;
+        
+    }
+    .search:hover{
+        border-color: #45a049; 
+    }
 
     /* Responsive adjustments */
     @media screen and (max-width: 768px) {
@@ -126,6 +150,8 @@
             padding: 0.5rem;
         }
     }
+
+
 </style>
 
 
@@ -133,6 +159,11 @@
     <%include("../layouts/header.ejs")%>
 
     <h1>Dashboard</h1>
+    <form action="/admin/dashboard/search" method="GET">
+        <input class="search" type = "text" name="feed" placeholder="Search users..."  >
+        <button  type="submit" style="padding: 5px 10px; font-size: 15px; " >Search</button>
+    </form> 
+    
 
     <a href="/admin/new-user">Add New User</a>
 

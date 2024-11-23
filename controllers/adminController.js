@@ -10,20 +10,20 @@ const loadLogin = async(req,res)=>{
 }
 const verifyLogin = async(req,res)=>{
     try{
-       
         const email = req.body.email;
         const password = req.body.password;
-        const userData = await User.findOne({email:email});
-        if(userData){
+        const adminData = await User.findOne({email:email, is_admin: 1});
+        console.log(adminData)
+        if(adminData){
 
-           const passwordMatch = await bcrypt.compare(password,userData.password)
+           const passwordMatch = await bcrypt.compare(password,adminData.password)
 
            if(passwordMatch){
 
-            if(userData.is_admin ===0){
+            if(adminData.is_admin === 0){
                 res.render('login',{message:"Email and password is incorrect"})
             }else{
-                req.session.user_id = userData._id;
+                req.session.admin_id = adminData._id
                 res.redirect("/admin/home")
             }
 
@@ -41,15 +41,41 @@ const verifyLogin = async(req,res)=>{
 }
 const loadDashboard = async(req,res)=>{
     try{
-        const userData = await User.findById({_id:req.session.user_id})
+        const userData = await User.findById({_id:req.session.admin_id})
         res.render('home',{admin:userData});
     }catch(error){
         console.log(error.message);
     }
 }
+const searchUser = async (req, res) => {
+    try {
+        // console.log('search')
+        const query = req.query.feed;
+        const userData = await User.find({
+            is_admin: 0,
+            $or: [
+                { name: { $regex: query, $options: 'i' } },
+                { email: { $regex: query, $options: 'i' } },
+                { mobile: { $regex: query} }
+            ],
+        });
+
+
+        return res.render('dashboard', { users: userData })
+
+
+
+    } catch (error) {
+        // console.log('error')
+        console.error(error.message)
+        res.redirect('/admin')
+
+    }
+}
+
 const logout = async(req,res)=>{
     try{
-        req.session.destroy();
+        delete req.session.admin_id
         res.redirect('/admin')
     }catch(error){
         console.log(error.message)
@@ -144,6 +170,7 @@ module.exports = {
     loadLogin,
     verifyLogin,
     loadDashboard,
+    searchUser,
     logout,
     adminDashboard,
     newUserLoad,

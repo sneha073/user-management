@@ -1,6 +1,7 @@
 const isLogin = async(req,res,next)=>{
     try{
-        if(req.session.user_id){
+        if(req.session.admin_id){
+            console.log(req.session,'session')
             res.setHeader("Cache-Control","no-store")
             return next();
         }else{
@@ -12,7 +13,8 @@ const isLogin = async(req,res,next)=>{
 }
 const isLogout = async(req,res,next)=>{
     try {
-        if(req.session.user_id){
+        if(req.session.admin_id){
+            console.log(req.session,'session')
             res.setHeader("Cache-Control","no-store")
             return res.redirect('/admin/home')
         }

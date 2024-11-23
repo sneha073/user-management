@@ -75,11 +75,8 @@ const verifyLogin = async(req,res)=>{
             const passwordMatch = await bcrypt.compare(password,userData.password); 
 
             if(passwordMatch){
-                
                     req.session.user_id = userData._id;
                     res.redirect('/home');
-                
-
             }else{
                 res.render('login',{message:"Email and password is incorrect"})
             }
@@ -108,7 +105,7 @@ const loadHome = async(req,res)=>{
 const userLogout = async(req,res)=>{
     try{
         
-        req.session.destroy();
+        delete req.session.user_id;
         res.redirect('/')
 
 
